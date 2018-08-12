@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "ms.ralph.template"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "0.0.1"
+        multiDexEnabled = true
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            debuggable false
+            dexOptions {
+                preDexLibraries false
+            }
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            applicationIdSuffix ".dev"
+            dexOptions {
+                preDexLibraries true
+            }
+        }
+    }
+    androidExtensions {
+        experimental = true
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+        exclude 'META-INF/main.kotlin_module'
+    }
+    lintOptions {
+        disable 'CheckResult'
+    }
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+dependencies {
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:2.16"
+    implementation "com.google.dagger:dagger-android:2.16"
+    implementation "com.google.dagger:dagger-android-support:2.16"
+    kapt "com.google.dagger:dagger-compiler:2.16"
+    kapt "com.google.dagger:dagger-android-processor:2.16"
+
+    // Support lib
+    implementation "androidx.legacy:legacy-support-v4:1.0.0-beta01"
+    implementation "androidx.legacy:legacy-support-v13:1.0.0-beta01"
+    implementation "androidx.appcompat:appcompat:1.0.0-beta01"
+    implementation "com.google.android.material:material:1.0.0-beta01"
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:2.1.12"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.0.2"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:2.2.1"
+}
